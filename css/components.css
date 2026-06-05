@@ -13,6 +13,12 @@
   gap: 16px;
 }
 
+@media (max-width: 767px) {
+  .grid2 {
+    grid-template-columns: 1fr; /* Stack columns on small screens */
+  }
+}
+
 .grid2-wide {
   grid-template-columns: 1fr 320px;
 }

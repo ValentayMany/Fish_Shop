@@ -236,3 +236,7 @@ async function saveEditedItem() {
 function handleLogout() {
   if (confirm("ຕ້ອງການອອກຈາກລະບົບຫຼືບໍ່?")) logout();
 }
+
+function toggleSidebar() {
+  document.body.classList.toggle("sidebar-open");
+}
