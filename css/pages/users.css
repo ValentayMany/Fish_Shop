@@ -1,0 +1,73 @@
+/* Users management page */
+.users-page .users-grid {
+  grid-template-columns: 1fr 320px;
+}
+
+.users-page .password-card {
+  align-self: start;
+}
+
+.users-page .password-form {
+  padding: 0 4px 4px;
+}
+
+.users-page .role-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.users-page .role-badge.admin {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.users-page .role-badge.staff {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.users-page .form-hint {
+  color: var(--muted);
+  font-size: 11px;
+  display: block;
+  margin-top: 4px;
+}
+
+.users-page .form-msg {
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.users-page .form-msg.success {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.users-page .form-msg.error {
+  background: rgba(239, 68, 68, 0.08);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.users-page .btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+.users-page .btn-icon:hover {
+  background: var(--surface2);
+}
+
+.users-page .btn-icon.danger:hover {
+  background: rgba(239, 68, 68, 0.1);
+}

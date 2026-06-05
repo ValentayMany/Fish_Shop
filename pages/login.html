@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AquaShop — ເຂົ້່າສູ່ລະບົບ</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/pages/login.css">
+</head>
+<body class="login-page">
+
+<div class="login-box">
+  <div class="logo">
+    <div class="logo-mark">W</div>
+    <div class="logo-name">WillowShop</div>
+    <div class="logo-sub">ລະບົບຈັດການຮ້ານຂາຍປາສວຍງາມ</div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label"><b>ຊື່ຜູ້ໃຊ້</b></label>
+    <input class="form-input" id="username" type="text" placeholder="ປ້ອນຊື່ຜູ້ໃຊ້" autocomplete="off">
+  </div>
+  <div class="form-group">
+    <label class="form-label"><b>ລະຫັດຜ່ານ</b></label>
+    <input class="form-input" id="password" type="password" placeholder="ປ້ອນລະຫັດຜ່ານ">
+  </div>
+
+  <button class="btn-login" onclick="doLogin()"><b>ເຂົ້າສູ່ລະບົບ</b></button>
+  <div class="error-msg" id="errMsg">ຊື່ຜູ້ໃຊ້ຫຼືລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ</div>
+</div>
+
+<script src="../js/utils.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/pages/login.js"></script>
+</body>
+</html>

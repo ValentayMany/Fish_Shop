@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WillowShop — ຂາຍສິນຄ້າ (POS)</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages/pos.css">
+</head>
+
+<body class="pos-page">
+
+  <div class="sidebar">
+    <div class="logo">
+      <div class="logo-mark"><b>W</b></div>
+      <div class="logo-name"><b>WillowShop</b></div>
+      <div class="logo-sub"><b>ລະບົບຈັດການຮ້ານຂາຍປາສວຍງາມ</b></div>
+    </div>
+    <div class="nav">
+      <div class="nav-label"><b>ເມນູຫຼັກ</b></div>
+      <a class="nav-item" href="dashboard.html"><b>ໜ້າຫຼັກ</b></a>
+      <a class="nav-item" href="stock.html"><b>ສະຕອັກປາ</b></a>
+      <a class="nav-item active" href="pos.html"><b>ຂາຍສິນຄ້າ</b></a>
+      <a class="nav-item" href="supplier.html"><b>ຮັບປາເຂົ້າ</b></a>
+      <a class="nav-item" href="report.html"><b>ລາຍງານ</b></a>
+      <div class="nav-label"><b>ລະບົບ</b></div>
+      <a class="nav-item" href="users.html"><b>ຈັດການຜູ້ໃຊ້</b></a>
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-pill">
+        <div class="avatar">A</div>
+        <div>
+          <div class="user-name"><b>Admin</b></div>
+          <div class="user-role"><b>ເຈົ້າຂອງຮ້ານ</b></div>
+        </div>
+      </div>
+      <button class="logout-btn" onclick="handleLogout()">ອອກຈາກລະບົບ</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <div class="page-title"><b>ຂາຍສິນຄ້າ (POS)</b></div>
+        <div class="page-sub"><b>ເລືອກສິນຄ້າ → ໃສ່ຕະກ້າ → ຊໍາລະເງິນ</b></div>
+      </div>
+      <div class="topbar-right">
+        <input class="search-box" id="searchBox" placeholder="ຄົ້ນຫາສິນຄ້າ..." oninput="filterItems()">
+      </div>
+    </div>
+
+    <div class="pos-wrap">
+      <div class="left-panel">
+        <div class="tab-bar" style="flex-shrink:0">
+          <div class="tab active" id="tab-fish" onclick="switchTab('fish')">ປານໍ້າຈືດ</div>
+          <div class="tab" id="tab-food" onclick="switchTab('food')">ຫົວອາຫານປາ</div>
+        </div>
+
+        <div class="item-list" id="item-list">
+          <div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:40px;">ກຳລັງໂຫຼດສິນຄ້າ...</div>
+        </div>
+      </div>
+
+      <div class="right-panel">
+        <div class="cart-box">
+          <div class="cart-header">
+            <div class="cart-label"><b>ກະຕ່າສິນຄ້າ</b></div>
+            <div class="cart-count" id="cart-count">0 ລາຍການ</div>
+          </div>
+          <div class="cart-items" id="cart-items">
+            <div class="cart-empty"><b>ຍັງບໍ່ມີສິນຄ້າ</b><br>ກົດເລືອກຈາກດ້ານຊ້າຍ</div>
+          </div>
+        </div>
+
+        <div class="payment-box">
+          <div class="pay-row" style="margin-top:8px">
+            <span class="pay-label" style="font-size:12px">ສ່ວນຫຼຸດ</span>
+            <div style="display:flex; gap:6px; align-items:center;">
+              <input type="number" id="discount-input" value="0" min="0" style="width:70px; text-align:right; padding:4px 6px; background:var(--surface2); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--mono);" oninput="renderCart()">
+              <select id="discount-type" style="padding:4px; background:var(--surface2); border:1px solid var(--border); border-radius:6px; color:var(--text);" onchange="renderCart()">
+                <option value="kip">₭</option>
+                <option value="percent">%</option>
+              </select>
+            </div>
+          </div>
+          <div class="pay-row">
+            <span class="pay-label"><b>ຍອດສຸດທິ</b></span>
+            <span class="pay-val pay-total" id="net-amount"><b>₭0</b></span>
+          </div>
+          <div class="divider"></div>
+          <div style="font-size:11px;color:var(--muted);font-family:var(--mono);margin-bottom:6px"><b>ວິທີຊໍາລະເງິນ</b></div>
+          <div class="pay-methods">
+            <button class="pay-method selected" id="pay-cash" onclick="selectPayMethod('cash')"><b>ເງິນສົດ</b></button>
+            <button class="pay-method" id="pay-transfer" onclick="selectPayMethod('transfer')"><b>ໂອນເງິນ</b></button>
+          </div>
+          <div id="cash-section" class="cash-row">
+            <div class="cash-group">
+              <span class="cash-label"><b>ຮັບເງິນມາ (₭)</b></span>
+              <input class="cash-input" id="cash-input" type="number" placeholder="0" oninput="calcChange()">
+            </div>
+            <div class="cash-group">
+              <span class="cash-label"><b>ເງິນທອນ (₭)</b></span>
+              <input class="cash-change" id="cash-change" readonly placeholder="0">
+            </div>
+          </div>
+          <button class="checkout-btn" id="checkout-btn" onclick="checkout()" disabled><b>ຊໍາລະເງິນ</b></button>
+          <button class="clear-btn" onclick="clearCart()"><b>ລ້າງຕະກ້າ</b></button>
+        </div>
+
+        <div class="history-box">
+          <div class="history-header">
+            <div class="history-title"><b>ປະຫວັດການຂາຍມື້ນີ້</b></div>
+            <span style="font-size:11px;font-family:var(--mono);color:var(--muted)" id="history-count"><b>0</b> ບິນ</span>
+          </div>
+          <div class="history-list" id="history-list">
+            <div class="history-empty"><b>ຍັງບໍ່ມີການຂາຍມື້ນີ້</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="receiptModal">
+    <div class="modal-content">
+      <div id="view-receipt-area" class="receipt-paper"></div>
+      <div class="modal-actions">
+        <button class="btn-modal btn-print" onclick="printReceipt()"><b>🖨 ພິມໃບບິນ</b></button>
+        <button class="btn-modal btn-close" onclick="closeReceiptModal()"><b>ປິດໜ້າຕ່າງ</b></button>
+      </div>
+    </div>
+  </div>
+
+  <div id="print-receipt-area" class="receipt-paper" style="display: none;"></div>
+
+  <script src="../js/utils.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/pages/pos.js"></script>
+</body>
+
+</html>

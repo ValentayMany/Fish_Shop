@@ -1,0 +1,44 @@
+/* Stock page */
+.stock-page .grid2 {
+  grid-template-columns: 1fr minmax(280px, 350px);
+  gap: 16px;
+}
+
+.stock-page .grid2 > div:last-child {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.alert-card {
+  background: var(--warn-soft);
+  border: 1px solid #fde68a;
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.alert-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--warn);
+  margin-bottom: 12px;
+}
+
+.alert-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #fde68a;
+  font-size: 12px;
+}
+
+.alert-item:last-child {
+  border-bottom: none;
+}
+
+.alert-stock {
+  font-family: var(--mono);
+  color: var(--danger);
+  font-size: 11px;
+}

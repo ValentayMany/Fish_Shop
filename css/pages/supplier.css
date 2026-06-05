@@ -1,0 +1,283 @@
+/* Supplier / receive stock page */
+.supplier-page .grid2 {
+  grid-template-columns: 1fr 320px;
+}
+
+.supplier-page .item-thumb-container {
+  width: 42px;
+  height: 42px;
+  border-radius: 6px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+}
+
+.bill-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.summary-row span:last-child {
+  font-family: var(--mono);
+  color: var(--text);
+  font-weight: 500;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.total-price {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--green);
+  font-family: var(--mono);
+}
+
+.profit-indicator {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 6px;
+  font-size: 11px;
+  color: var(--green);
+  display: flex;
+  justify-content: space-between;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.history-table th {
+  padding: 10px 12px;
+  text-align: left;
+  background: var(--surface2);
+  color: var(--muted);
+  font-weight: 500;
+  border-bottom: 1px solid var(--border);
+}
+
+.history-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.hist-date {
+  font-family: var(--mono);
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.hist-supplier {
+  color: var(--text);
+}
+
+.hist-note {
+  color: var(--muted);
+  font-size: 11px;
+  display: block;
+  margin-top: 2px;
+}
+
+.hist-items {
+  color: var(--text);
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hist-total {
+  text-align: right;
+  font-family: var(--mono);
+  color: var(--green);
+  font-weight: 500;
+}
+
+.badge-supplier {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--text);
+  display: inline-block;
+}
+
+.modal-section-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin: 16px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.print-only {
+  display: none;
+}
+
+@media print {
+  .supplier-page .sidebar,
+  .supplier-page .topbar,
+  .supplier-page .card:not(.print-card),
+  .supplier-page .modal-overlay,
+  .supplier-page .btn-primary,
+  .supplier-page .logout-btn,
+  .supplier-page .btn-ghost {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-family: var(--font);
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .supplier-page .main,
+  .supplier-page .content {
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+
+  .supplier-page .grid2 {
+    display: block !important;
+  }
+
+  .print-card {
+    display: block !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .print-card .card-header {
+    display: none !important;
+  }
+
+  .print-header {
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #000000;
+  }
+
+  .print-header h2 {
+    margin: 0 0 6px 0;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000000 !important;
+  }
+
+  .print-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #000000 !important;
+  }
+
+  .history-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin-top: 10px;
+  }
+
+  .history-table th:nth-child(1),
+  .history-table td:nth-child(1) {
+    width: 15% !important;
+  }
+
+  .history-table th:nth-child(2),
+  .history-table td:nth-child(2) {
+    width: 30% !important;
+  }
+
+  .history-table th:nth-child(3),
+  .history-table td:nth-child(3) {
+    width: 40% !important;
+  }
+
+  .history-table th:nth-child(4),
+  .history-table td:nth-child(4) {
+    width: 15% !important;
+    text-align: right !important;
+  }
+
+  .history-table th {
+    background: #f0f0f0 !important;
+    color: #000000 !important;
+    font-weight: bold !important;
+    padding: 8px 6px !important;
+    border-top: 1px solid #000000 !important;
+    border-bottom: 1px solid #000000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .history-table td,
+  .history-table td span,
+  .history-table td small {
+    padding: 10px 6px !important;
+    border-bottom: 1px solid #666666 !important;
+    color: #000000 !important;
+    background: transparent !important;
+    white-space: normal !important;
+  }
+
+  .badge-supplier {
+    background: transparent !important;
+    color: #000000 !important;
+    padding: 0 !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+  }
+
+  .hist-date {
+    color: #000000 !important;
+    font-family: var(--font) !important;
+  }
+
+  .hist-items {
+    color: #000000 !important;
+    white-space: normal !important;
+  }
+
+  .hist-total {
+    color: #000000 !important;
+    font-weight: bold !important;
+    text-align: right !important;
+  }
+
+  .hist-note {
+    color: #444444 !important;
+    font-size: 12px !important;
+  }
+}

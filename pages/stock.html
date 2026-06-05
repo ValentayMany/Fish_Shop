@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WillowShop — ສະຕອັກປາ</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages/stock.css">
+</head>
+<body class="stock-page">
+
+<div class="sidebar">
+  <div class="logo">
+    <div class="logo-mark">W</div>
+    <div class="logo-name">WillowShop</div>
+    <div class="logo-sub">ລະບົບຈັດການຮ້ານຂາຍປາສວຍງາມ</div>
+  </div>
+  <div class="nav">
+    <div class="nav-label">ເມນູຫຼັກ</div>
+    <a class="nav-item" href="dashboard.html">ໜ້າຫຼັກ</a>
+    <a class="nav-item active" href="stock.html">ສະຕອັກປາ</a>
+    <a class="nav-item" href="pos.html">ຂາຍສິນຄ້າ</a>
+    <a class="nav-item" href="supplier.html">ຮັບປາເຂົ້າ</a>
+    <a class="nav-item" href="report.html">ລາຍງານ</a>
+    <div class="nav-label">ລະບົບ</div>
+    <a class="nav-item" href="users.html">ຈັດການຜູ້ໃຊ້</a>
+  </div>
+  <div class="sidebar-footer">
+    <div class="user-pill">
+      <div class="avatar">A</div>
+      <div><div class="user-name">Admin</div><div class="user-role">ເຈົ້າຂອງຮ້ານ</div></div>
+    </div>
+    <button class="logout-btn" onclick="handleLogout()">ອອກຈາກລະບົບ</button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div>
+      <div class="page-title"><b>ສະຕອັກປາ</b></div>
+      <div class="page-sub"><b>ຈັດການປານໍ້າຈືດແລະອາຫານປາ</b></div>
+    </div>
+    <div class="topbar-right"></div>
+  </div>
+
+  <div class="content">
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-label"><b>ປານໍ້າຈືດ</b></div>
+        <div class="stat-value" id="stat-fish-count"><b>0</b><span class="stat-unit">ຊະນິດ</span></div>
+        <div class="stat-badge badge-info" id="stat-fish-total">ສະຕອັກລວມ 0 ໂຕ</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label"><b>ອາຫານປາ</b></div>
+        <div class="stat-value" id="stat-food-count"><b>0</b><span class="stat-unit">ລາຍການ</span></div>
+        <div class="stat-badge badge-up" id="stat-food-total">ສະຕອັກລວມ 0 ອັນ</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label"><b>ໃກ້ໝົດ</b></div>
+        <div class="stat-value" id="stat-low-count"><b>0</b><span class="stat-unit">ລາຍການ</span></div>
+        <div class="stat-badge badge-warn">ຕ້ອງເຕີມ</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label"><b>ມູນຄ່າສະຕອັກລວມ (ທຸນ)</b></div>
+        <div class="stat-value" id="stat-total-value"><b>₭0</b></div>
+        <div class="stat-badge badge-info">ປະມວນຜົນ</div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div>
+        <div class="tab-bar">
+          <div class="tab active" id="tab-fish" onclick="switchTab('fish')"><b>ປານໍ້າຈືດ</b></div>
+          <div class="tab" id="tab-food" onclick="switchTab('food')"><b>ອາຫານປາ</b></div>
+        </div>
+
+        <div id="list-fish">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><b>ລາຍການສະຕອັກປານໍ້າຈືດ</b></div>
+              <input class="search-box" id="search-fish" placeholder="ຄົ້ນຫາປານໍ້າຈືດ..." oninput="renderStock()">
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>ຮູບພາບ / ຊື່ປາ / ສາຍພັນ</th>
+                  <th>ລາຄາຂາຍ</th>
+                  <th>ສະຕອັກ</th>
+                  <th>ສະຖານະ</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="table-fish-body">
+                </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="list-food" class="hidden">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><b>ລາຍການສະຕອັກອາຫານປາ</b></div>
+              <input class="search-box" id="search-food" placeholder="ຄົ້ນຫາອາຫານປາ..." oninput="renderStock()">
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>ຮູບພາບ / ຊື່ລາຍການອາຫານປາ</th>
+                  <th>ລາຄາຂາຍ</th>
+                  <th>ສະຕອັກ</th>
+                  <th>ສະຖານະ</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="table-food-body">
+                </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="alert-card">
+          <div class="alert-title"><b>ສະຕອັກໃກ້ໝົດ (ໜ່ອຍກວ່າ 10 ອັນ)</b></div>
+          <div id="alert-list-container">
+            </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal-overlay" id="edit-modal" style="display:none" onclick="if(event.target===this)this.style.display='none'">
+  <div class="modal">
+    <div class="modal-title" id="edit-modal-title"><b>ແກ້ໄຂຂໍ້ມູນສິນຄ້າ</b></div>
+    <input type="hidden" id="edit-item-id">
+    
+    <div class="form-group">
+      <label class="form-label"><b>ໝວດໝູ່ສິນຄ້າ</b></label>
+      <select class="form-select" id="edit-item-category" onchange="updateEditUnitLabel()">
+        <option value="fish"><b>ປານໍ້າຈືດ</b></option>
+        <option value="food"><b>ອາຫານປາ</b></option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label"><b>ຮູບພາບສິນຄ້າ</b></label>
+      <input type="file" accept="image/*" class="form-input" id="edit-item-file" style="padding: 6px;">
+      <small style="color: var(--muted); font-size: 11px; display: block; margin-top: 4px;">ຖ້າບໍ່ຕ້ອງການປ່ຽນຮູບພາບ ບໍ່ຕ້ອງເລືອກໄຟລລະບົບຈະໃຊ້ຮູບເກົ່າ</small>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label"><b>ຊື່ສິນຄ້າ</b></label>
+      <input class="form-input" type="text" id="edit-item-name" placeholder="ເຊັ່ນ ປາກັດຈີນ">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label"><b>ຊື່ວິທະຍາສາດ / ຍີ່ຫໍ້</b></label>
+      <input class="form-input" type="text" id="edit-item-detail" placeholder="ເຊັ່ນ Betta splendens">
+    </div>
+
+    <div class="form-row">
+      <div>
+        <label class="form-label"><b>ລາຄາຕົ້ນທຶນ (₭)</b></label>
+        <input class="form-input" type="number" id="edit-item-cost" min="0">
+      </div>
+      <div>
+        <label class="form-label"><b>ລາຄາຂາຍຈໍາໜ່າຍ (₭)</b></label>
+        <input class="form-input" type="number" id="edit-item-price" min="0">
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label class="form-label" id="edit-item-unit-label"><b>ຈໍານວນສິນຄ້າໃນສະຕອັກ</b></label>
+      <input class="form-input" type="number" id="edit-item-qty" min="0">
+    </div>
+
+    <div class="modal-actions" style="margin-top: 20px;">
+      <button type="button" class="btn btn-ghost" onclick="closeEditModal()"><b>ຍົກເລີກ</b></button>
+      <button class="btn btn-primary" onclick="saveEditedItem()"><b>ບັນທຶກການແກ້ໄຂ</b></button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/utils.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/pages/stock.js"></script>
+
+</body>
+</html>

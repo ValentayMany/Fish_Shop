@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WillowShop — ລາຍງານຍອດຂາຍແລະກຳໄລ</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages/report.css">
+</head>
+<body class="report-page">
+
+<div class="sidebar">
+  <div class="logo">
+    <div class="logo-mark"><b>W</b></div>
+    <div class="logo-name"><b>WillowShop</b></div>
+    <div class="logo-sub"><b>ລະບົບຈັດການຮ້ານຂາຍປາສວຍງາມ</b></div>
+  </div>
+  <div class="nav">
+    <div class="nav-label"><b>ເມນູຫຼັກ</b></div>
+    <a class="nav-item" href="dashboard.html"><b>ໜ້າຫຼັກ</b></a>
+    <a class="nav-item" href="stock.html"><b>ສະຕອັກປາ</b></a>
+    <a class="nav-item" href="pos.html"><b>ຂາຍສິນຄ້າ</b></a>
+    <a class="nav-item" href="supplier.html"><b>ຮັບປາເຂົ້າ</b></a>
+    <a class="nav-item active" href="report.html"><b>ລາຍງານ</b></a>
+    <div class="nav-label"><b>ລະບົບ</b></div>
+    <a class="nav-item" href="users.html"><b>ຈັດການຜູ້ໃຊ້</b></a>
+  </div>
+  <div class="sidebar-footer">
+    <div class="user-pill">
+      <div class="avatar">A</div>
+      <div>
+        <div class="user-name">Admin</div>
+        <div class="user-role">ເຈົ້າຂອງຮ້ານ</div>
+      </div>
+    </div>
+    <button class="logout-btn" onclick="handleLogout()">ອອກຈາກລະບົບ</button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div>
+      <div class="page-title"><b>ລາຍງານຍອດຂາຍແລະກຳໄລ</b></div>
+      <div class="page-sub"><b>ພາບລວມຜົນປະກອບການ ລາຍໄດ້ ແລະກໍາໄລສຸດທິ</b></div>
+    </div>
+    <button class="btn btn-primary" onclick="printReport()"><b>Export PDF</b></button>
+    <button class="btn btn-ghost" onclick="exportExcel()" style="margin-left:8px"><b>Export Excel</b></button>
+  </div>
+
+  <div class="content">
+        <div class="export-bar">
+      <div class="tab-bar">
+        <div class="tab active" onclick="switchTab(this, 'today')">ມື້ນີ້</div>
+        <div class="tab" onclick="switchTab(this, 'week')">ທິດນີ້</div>
+        <div class="tab" onclick="switchTab(this, 'month')">ເດືອນນີ້</div>
+      </div>
+      <div class="date-filter">
+        <span><b>ຫຼືເລືອກຊ່ວງເວລາ:</b></span>
+        <input class="date-input" type="date" id="filter-start-date">
+        <span>ถึง</span>
+        <input class="date-input" type="date" id="filter-end-date">
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-label"><b>ຍອດຂາຍ</b></div>
+        <div class="stat-value" id="stat-sales-total"><b>₭0</b></div>
+        <div class="stat-badge badge-info">ປະມວນຜົນ</div>
+      </div>
+      <div class="stat-card stat-card--profit">
+        <div class="stat-label"><b>ກຳໄລສຸດທິ</b></div>
+        <div class="stat-value" id="stat-profit-total"><b>₭0</b></div>
+        <div class="stat-badge badge-profit" id="stat-profit-margin">ມາຈິ້ນ 0%</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label"><b>ຈໍານວນທີ່ຂາຍໄດ້</b></div>
+        <div class="stat-value" id="stat-items-sold"><b>0</b><span class="stat-unit">ໂຕ</span></div>
+        <div class="stat-badge badge-up" id="stat-items-sold-badge">0 ຄັ້ງ</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label"><b>ຍອດຂາຍເດືອນນີ້</b></div>
+        <div class="stat-value" id="stat-monthly-sales"><b>₭0</b></div>
+        <div class="stat-badge badge-info">ເດືອນນີ້</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label"><b>ສິນຄ້າຂາຍດີສຸດ</b></div>
+        <div class="stat-value" id="stat-best-seller-name" style="font-size:16px;">—</div>
+        <div class="stat-badge badge-info" id="stat-best-seller-qty">0 ໂຕ / ເດືອນ</div>
+      </div>
+    </div>
+
+    <div class="report-grid report-grid--3">
+      <div class="card">
+        <div class="card-header"><div class="card-title">ຍອດຂາຍແລະກຳໄລ (ທຽບລາຍວັນ)</div></div>
+        <div class="card-body">
+          <div class="chart-box">
+            <div class="chart-bars" id="chart-bars"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">ສິນຄ້າຂາຍດີ Top 5</div></div>
+        <div class="card-body">
+          <div class="top-fish" id="top-fish-list"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">ສິນຄ້າຂາຍຊ້າ Top 5</div></div>
+        <div class="card-body">
+          <div class="top-fish" id="worst-fish-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="report-grid report-grid--2" style="margin-top:16px">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><b>ສິນຄ້າສະຕອັກຕ່ຳ (ໜ້ອຍກວ່າ 10)</b></div>
+          <span id="low-stock-badge" style="font-size:11px;color:var(--warn)">0 ລາຍການ</span>
+        </div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>ຊື່ສິນຄ້າ</th>
+                <th>ໝວດ</th>
+                <th>ຄົງເຫຼືອ</th>
+                <th>ຕົ້ນທຶນ</th>
+                <th>ລາຄາຂາຍ</th>
+              </tr>
+            </thead>
+            <tbody id="low-stock-body"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">ລາຍງານຕາມ Supplier</div></div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Supplier</th>
+                <th>ຈຳນວນບິນ</th>
+                <th>ຈຳນວນສິນຄ້າ</th>
+                <th>ມູນຄ່າຕົ້ນທຶນ</th>
+              </tr>
+            </thead>
+            <tbody id="supplier-report-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="print-only-header">
+        <h2 style="margin:0;font-size:22px;color:#000;"><b>WillowShop — ລາຍງານຍອດຂາຍ ແລະ ກຳໄລສຸດທິ</b></h2>
+        <div class="print-meta-row">
+          <span>ປະເພດເອກະສານ: ສະຫຼຸບລາຍການຂາຍແລະກຳໄລປະຈໍາວັນ</span>
+          <span>ວັນທີ່ອອກເອກະສານ: <strong id="printDate">--/--/----</strong></span>
+        </div>
+      </div>
+      <div class="card-header">
+        <div class="card-title"><b>ລາຍງານປະຫວັດການຂາຍ ແລະ ຄໍານວນກຳໄລ</b></div>
+        <span style="font-size:11px;font-family:var(--mono);color:var(--muted);background:rgba(255,255,255,.05);padding:2px 8px;border-radius:20px;" id="history-count-badge">0 ລາຍການ</span>
+      </div>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>ລາຍການສິນຄ້າ</th>
+              <th>ເວລາຂາຍ</th>
+              <th>ຈໍານວນ</th>
+              <th>ຍອດຂາຍສຸດທິ</th>
+              <th>ຕົ້ນທຶນລວມ</th>
+              <th style="color:var(--green);">ກຳໄລສຸດທິ</th>
+            </tr>
+          </thead>
+                    <tbody>
+            <!-- โหลดรายการประวัติการขายแบบไดนามิก -->
+          </tbody>
+          <tfoot style="border-top:2px solid var(--border);">
+            <!-- โหลดสรุปยอดรวมแบบไดนามิก -->
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="../js/utils.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/pages/report.js"></script>
+</body>
+</html>

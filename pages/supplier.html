@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WillowShop — ຮັບສິນຄ້າເຂົ້າ</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages/supplier.css">
+</head>
+
+<body class="supplier-page">
+
+  <div class="sidebar">
+    <div class="logo">
+      <div class="logo-mark"><b>W</b></div>
+      <div class="logo-name"><b>WillowShop</b></div>
+      <div class="logo-sub"><b>ລະບົບຈັດການຮ້ານຂາຍປາສວຍງາມ</b></div>
+    </div>
+    <div class="nav">
+      <div class="nav-label"><b>ເມນູຫຼັກ</b></div>
+      <a class="nav-item" href="dashboard.html"><b>ໜ້າຫຼັກ</b></a>
+      <a class="nav-item" href="stock.html"><b>ສະຕອັກປາ</b></a>
+      <a class="nav-item" href="pos.html"><b>ຂາຍສິນຄ້າ</b></a>
+      <a class="nav-item active" href="supplier.html"><b>ຮັບປາເຂົ້າ</b></a>
+      <a class="nav-item" href="report.html"><b>ລາຍງານ</b></a>
+      <div class="nav-label"><b>ລະບົບ</b></div>
+      <a class="nav-item" href="users.html"><b>ຈັດການຜູ້ໃຊ້</b></a>
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-pill">
+        <div class="avatar">A</div>
+        <div>
+          <div class="user-name"><b>Admin</b></div>
+          <div class="user-role"><b>ເຈົ້າຂອງຮ້ານ</b></div>
+        </div>
+      </div>
+      <button class="logout-btn" onclick="handleLogout()">ອອກຈາກລະບົບ</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <div class="page-title"><b>ຮັບສິນຄ້າຈາກຊັບພາຍເອີ້</b></div>
+        <div class="page-sub"><b>ບັນທຶກເອກະສານແລະບັນທຶກລາຍການປາ/ອຸປະກອນເຂົ້າສູ່ລະບົບຄັງພ້ອມຂໍ້ມູນຄົບຖ້ວນໃນຄັ້ງດຽວ</b></div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="grid2">
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><b>📋 ເພີ່ມສິນຄ້າເຂົ້າບິນຮັບຂອງ</b></div>
+            </div>
+            <div style="padding: 20px;">
+              <p style="font-size: 13px; color: var(--muted); margin: 0 0 16px;">
+                ກົດປຸ່ມດ້ານລຸ່ມເພື່ອເພີ່ມສິນຄ້າໃໝ່ເຂົ້າບິນ ຂໍ້ມູນຊັບພາຍເອີ້ແລະວັນທີ່ຈະປ້ອນພ້ອມກັນໃນໜ້າຕ່າງດຽວເລີຍ
+              </p>
+              <button class="btn btn-primary" onclick="openModal()" style="width: 100%; justify-content: center;">
+                <b>+ ເພີ່ມສິນຄ້າເຂົ້າບິນ</b>
+              </button>
+              <div class="form-group" style="margin-top: 16px; margin-bottom: 0;">
+                <label class="form-label"><b>ໝາຍເຫດລວມຂອງບິນນີ້</b></label>
+                <input class="form-input" id="receive-note"
+                  placeholder="ເຊັ່ນ ບັນທຶກຊຸດປາກັດຂັດເກດ ຫຼືຂໍ້ມູນເພີ່ມເຕີມລອ໊ດຮັບເຂົ້າ">
+              </div>
+            </div>
+          </div>
+
+          <div class="card print-card" style="margin-top: 16px;">
+            <div class="card-header" style="justify-content: space-between;">
+              <div class="card-title"><b>📜 ປະຫວັດການຮັບສິນຄ້າເຂົ້າສະຕອັກ</b></div>
+              <button class="btn btn-ghost" onclick="exportHistoryPDF()" style="font-size: 12px; padding: 6px 12px;"><b>⬇ Export PDF</b></button>
+            </div>
+            <div style="overflow-x: auto;">
+              <div class="print-only print-header">
+                <h2><b>WillowShop — ລາຍງານປະຫວັດການຮັບສິນຄ້າເຂົ້າສະຕອັກ</b></h2>
+                <div class="print-meta">
+                  <span>ປະເພດເອກະສານ: ລາຍການສະຫຼຸບການນຳເຂົ້າສິນຄ້າ (Suppliers)</span>
+                  <span>ວັນທີ່ອອກເອກະສານ: <strong id="print-date">--/--/----</strong></span>
+                </div>
+              </div>
+              <table class="history-table">
+                <thead>
+                  <tr>
+                    <th>ວັນທີ່</th>
+                    <th>ຊັບພາຍເອີ້</th>
+                    <th>ລາຍການສິນຄ້າທີ່ຮັບເຂົ້າ</th>
+                    <th style="text-align: right;">ຕົ້ນທຶນລວມ</th>
+                  </tr>
+                </thead>
+                <tbody id="history-table-body">
+                  <tr id="history-empty-row">
+                    <td colspan="4" style="text-align: center; color: var(--muted); padding: 30px;">
+                      ຍັງບໍ່ມີປະຫວັດການບັນທຶກຮັບສິນຄ້າໃນເຊສຊັ່ນນີ້
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="card-header" style="justify-content: space-between;">
+              <div class="card-title"><b>ລາຍການທ້າຍບິນ</b></div>
+              <div id="badge-count"
+                style="font-size:11px; background:rgba(255,255,255,0.05); padding:2px 8px; border-radius:10px; font-family:var(--mono);">
+                0 ລາຍການ</div>
+            </div>
+            <div style="max-height: 320px; overflow-y: auto;">
+              <table style="width: 100%; font-size: 12px;">
+                <thead>
+                  <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <th style="padding: 8px 12px; text-align: left;">ສິນຄ້າ</th>
+                    <th style="padding: 8px 12px; text-align: center; width: 60px;">ຈໍານວນ</th>
+                    <th style="padding: 8px 12px; text-align: right; width: 70px;">ລາຄາລວມ</th>
+                    <th style="padding: 8px 4px; text-align: center; width: 30px;"></th>
+                  </tr>
+                </thead>
+                <tbody id="cart-table-body">
+                  <tr id="cart-empty-row">
+                    <td colspan="4" style="text-align: center; color: var(--muted); padding: 40px 10px;">
+                      ຍັງບໍ່ມີລາຍການສິນຄ້າຖືກເພີ່ມໃນບິນນີ້
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div style="padding: 16px;">
+              <div class="bill-summary">
+                <div class="summary-row"><span>ຈໍານວນຊະນິດສິນຄ້າ</span><span id="summary-types">0 ຊະນິດ/</span></div>
+                <div class="summary-row"><span>ຈໍານວນລວມທັງໝົດ</span><span id="summary-pieces">0 ອັນ</span></div>
+                <div class="total-row">
+                  <span style="font-size: 13px;">ຕົ້ນທຶນລວມ</span>
+                  <div class="total-price" id="summary-total">₭0</div>
+                </div>
+              </div>
+              <button class="btn btn-primary" id="btn-submit-all"
+                style="width: 100%; margin-top: 16px; justify-content: center;">
+                ຍືນຍັນບັນທຶກຮັບສິນຄ້າເຂົ້າຄັງ
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal" style="display:none" onclick="if(event.target===this)this.style.display='none'">
+    <div class="modal">
+      <div class="modal-title"><b>+ ເພີ່ມສິນຄ້າເຂົ້າບິນ</b></div>
+
+      <div class="modal-section-label"><b>ຂໍ້ມູນການຮັບເຂົ້າ</b></div>
+      <div class="form-row">
+        <div>
+          <label class="form-label"><b>ຊັບພາຍເອີ້</b></label>
+          <input class="form-input" id="modal-supplier" list="supplier-options"
+            placeholder="ພິມຊື່ຊັບພາຍເອີ້ ຫຼື ຄລິກເລືອກ">
+          <datalist id="supplier-options">
+            <option value="ร้านปลาสมชาย — 081-234-5678">
+            <option value="ร้านฟิชมาร์เก็ต — 02-123-4567">
+          </datalist>
+        </div>
+        <div>
+          <label class="form-label"><b>ວັນທີ່ຮັບເຂົ້າ</b></label>
+          <input class="form-input" type="date" id="modal-receive-date">
+        </div>
+      </div>
+
+      <div class="modal-section-label"><b>ຂໍ້ມູນສິນຄ້າ</b></div>
+      <div class="form-group">
+        <label class="form-label"><b>ປະເພດການເພີ່ມສິນຄ້າ</b></label>
+        <select class="form-select" id="modal-product-source" onchange="toggleProductSource()">
+          <option value="new">+ ສ້າງສິນຄ້າໃໝ່ (New Product)</option>
+          <option value="existing">ເລືອກຈາກສິນຄ້າທີ່ມີຢູ່ແລ້ວ (Existing Product)</option>
+        </select>
+      </div>
+      <div class="form-group" id="existing-product-group" style="display: none;">
+        <label class="form-label">ເລືອກສິນຄ້າທີ່ມີຢູ່ແລ้ວ</label>
+        <select class="form-select" id="modal-product-select" onchange="selectExistingProduct()">
+          <option value="">-- <b>ກະລຸນາເລືອກສິນຄ້າ</b> --</option>
+        </select>
+      </div>
+      <div class="form-group" id="category-group">
+        <label class="form-label"><b>ໝວກໝູ່</b></label>
+        <select class="form-select" id="modal-category" onchange="updateModalUnit()">
+          <option value="fish">ປານໍ້າຈືດ</option>
+          <option value="food">ຫົວອາຫານປາ</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label"><b>ຮູບພາບສິນຄ້າ</b></label>
+        <input type="file" accept="image/*" class="form-input" id="modal-file-input" style="padding: 6px;">
+        <small
+          style="color: var(--muted); font-size: 11px; display: block; margin-top: 4px;">ລະບົບຈໍາລອງຮູບພາບຕົວຢ່າງເພື່ອນໍາຂໍ້ມູນໄປຂຶ້ນໂຄງຝັ່ງຂວາ</small>
+      </div>
+      <div class="form-group">
+        <label class="form-label"><b>ຊື່ສິນຄ້າ</b></label>
+        <input class="form-input" id="modal-product-name" placeholder="ເຊັ່ນ ປາກັດສີແດງ">
+      </div>
+      <div class="form-group">
+        <label class="form-label"><b>ຊື່ວິທະຍາສາດ / ຍີ່ຫໍ້</b></label>
+        <input class="form-input" id="modal-product-detail" placeholder="ເຊັ່ນ Betta splendens ຫຼື Hikari">
+      </div>
+
+      <div class="modal-section-label"><b>💰 ລາຄາ ແລະ ຈໍານວນ</b></div>
+      <div class="form-row">
+        <div>
+          <label class="form-label"><b>ລາຄາຕົ້ນທຶນຮັບເຂົ້າ (₭)</b></label>
+          <input class="form-input" type="number" id="modal-product-price" value="0" min="0"
+            oninput="calculateLiveProfit()" onfocus="this.select()">
+        </div>
+        <div>
+          <label class="form-label"><b>ລາຄາຂາຍຈໍາໜ່າຍ (₭)</b></label>
+          <input class="form-input" type="number" id="modal-product-sale-price" value="0" min="0"
+            oninput="calculateLiveProfit()" onfocus="this.select()">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" id="modal-unit-label">ຈໍານວນ (ໂຕ)</label>
+        <input class="form-input" type="number" id="modal-product-qty" value="1" min="1" onfocus="this.select()">
+      </div>
+      <div class="profit-indicator" id="profit-panel">
+        <span>ສ່ວນຕ່າງກຳໄລຄາດການ:</span>
+        <span id="profit-text" style="font-weight: 500; font-family: var(--mono);">₭0 (0%)</span>
+      </div>
+
+      <div class="modal-actions" style="margin-top: 16px;">
+        <button class="btn btn-ghost" onclick="closeModal()">ຍົກເລີກ</button>
+        <button class="btn btn-primary" onclick="handleAddItem()">ບັນທຶກເພີ່ມລົງບິນ</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/utils.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/pages/supplier.js"></script>
+</body>
+
+</html>

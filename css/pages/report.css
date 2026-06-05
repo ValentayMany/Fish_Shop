@@ -1,0 +1,278 @@
+/* Report page */
+.report-page .export-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.report-page .tab-bar {
+  width: auto;
+  margin-bottom: 0;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.report-page .tab {
+  border: 1px solid transparent;
+}
+
+.report-page .tab.active {
+  background: var(--surface);
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.date-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.date-filter span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.date-input {
+  width: 140px;
+  padding: 5px 10px;
+  font-size: 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 6px;
+  outline: none;
+}
+
+.report-page .stats {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.report-page .stat-card--profit {
+  border-left: 3px solid var(--green);
+}
+
+.report-page .stat-card--profit .stat-label {
+  color: var(--green);
+  font-weight: 600;
+}
+
+.report-page .stat-card--profit .stat-value {
+  color: var(--green);
+}
+
+.badge-profit {
+  background: rgba(52, 211, 153, 0.15);
+  color: var(--green);
+  font-weight: 600;
+}
+
+.report-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.report-grid--3 {
+  grid-template-columns: 1.2fr 1fr 1fr;
+}
+
+.report-grid--2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.chart-box {
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 140px;
+}
+
+.bar-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.bar {
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  transition: opacity 0.15s;
+  cursor: pointer;
+}
+
+.bar:hover {
+  opacity: 0.75;
+}
+
+.bar-label {
+  font-size: 10px;
+  color: var(--muted);
+  font-family: var(--mono);
+}
+
+.top-fish {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.top-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.top-rank {
+  font-size: 11px;
+  font-family: var(--mono);
+  color: var(--muted);
+  min-width: 22px;
+}
+
+.top-bar-wrap {
+  flex: 1;
+  background: var(--surface2);
+  border-radius: 99px;
+  height: 6px;
+  overflow: hidden;
+}
+
+.top-bar-fill {
+  height: 100%;
+  border-radius: 99px;
+}
+
+.top-name {
+  font-size: 12px;
+  min-width: 100px;
+}
+
+.top-val {
+  font-size: 12px;
+  font-family: var(--mono);
+  color: var(--green);
+  min-width: 52px;
+  text-align: right;
+}
+
+.sale-name {
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.sale-time {
+  font-size: 11px;
+  color: var(--muted);
+  font-family: var(--mono);
+}
+
+.sale-amount {
+  font-family: var(--mono);
+  color: var(--warn);
+  font-weight: 600;
+}
+
+.profit-amount {
+  font-family: var(--mono);
+  color: var(--green);
+  font-weight: 600;
+}
+
+.print-only-header {
+  display: none;
+}
+
+@media print {
+  .report-page .sidebar,
+  .report-page .topbar,
+  .report-page .export-bar,
+  .report-page .stats,
+  .report-page .report-grid {
+    display: none !important;
+  }
+
+  .print-only-header {
+    display: block !important;
+    margin-bottom: 20px !important;
+    border-bottom: 3px double #000 !important;
+    padding-bottom: 12px !important;
+  }
+
+  .print-meta-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #000;
+    margin-top: 6px;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .report-page .main {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .report-page .content {
+    padding: 0 !important;
+    background: #fff !important;
+  }
+
+  .report-page .card {
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .report-page .card-header {
+    background: #fff !important;
+    border-bottom: 1px solid #000 !important;
+  }
+
+  .report-page .card-title {
+    color: #000 !important;
+    font-size: 16px !important;
+  }
+
+  .report-page table {
+    background: #fff !important;
+  }
+
+  .report-page th {
+    background: #eee !important;
+    color: #000 !important;
+    border-bottom: 2px solid #000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .report-page td {
+    border-bottom: 1px solid #ddd !important;
+    color: #000 !important;
+  }
+
+  .sale-amount,
+  .profit-amount {
+    color: #000 !important;
+    font-weight: bold !important;
+  }
+}

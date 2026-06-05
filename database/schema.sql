@@ -1,0 +1,82 @@
+-- WillowShop / AquaShop — MySQL schema
+CREATE DATABASE IF NOT EXISTS willowshop
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
+USE willowshop;
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(50) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  role ENUM('admin', 'staff') NOT NULL DEFAULT 'staff',
+  display_name VARCHAR(100) NOT NULL,
+  role_label VARCHAR(100) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS products (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(200) NOT NULL,
+  detail VARCHAR(255) DEFAULT NULL,
+  category ENUM('fish', 'food') NOT NULL DEFAULT 'fish',
+  cost DECIMAL(12,2) NOT NULL DEFAULT 0,
+  price DECIMAL(12,2) NOT NULL DEFAULT 0,
+  qty INT NOT NULL DEFAULT 0,
+  image_url VARCHAR(500) DEFAULT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX idx_category (category),
+  INDEX idx_name (name)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS sales (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  bill_number VARCHAR(32) NOT NULL UNIQUE,
+  total_amount DECIMAL(12,2) NOT NULL,
+  payment_method ENUM('cash', 'transfer') NOT NULL DEFAULT 'cash',
+  received_amount DECIMAL(12,2) NOT NULL DEFAULT 0,
+  change_amount DECIMAL(12,2) NOT NULL DEFAULT 0,
+  sold_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_sold_at (sold_at)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS sale_items (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  sale_id INT UNSIGNED NOT NULL,
+  product_id INT UNSIGNED NULL,
+  product_name VARCHAR(200) NOT NULL,
+  category ENUM('fish', 'food') NOT NULL,
+  qty INT NOT NULL,
+  unit_price DECIMAL(12,2) NOT NULL,
+  unit_cost DECIMAL(12,2) NOT NULL DEFAULT 0,
+  line_total DECIMAL(12,2) NOT NULL,
+  FOREIGN KEY (sale_id) REFERENCES sales(id) ON DELETE CASCADE,
+  FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE SET NULL,
+  INDEX idx_sale (sale_id)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS receive_orders (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  note TEXT,
+  total_cost DECIMAL(12,2) NOT NULL DEFAULT 0,
+  receive_date DATE NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_receive_date (receive_date)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS receive_items (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  receive_order_id INT UNSIGNED NOT NULL,
+  product_id INT UNSIGNED NULL,
+  name VARCHAR(200) NOT NULL,
+  detail VARCHAR(255) DEFAULT NULL,
+  category ENUM('fish', 'food') NOT NULL,
+  supplier VARCHAR(150) NOT NULL DEFAULT '',
+  cost DECIMAL(12,2) NOT NULL,
+  sale_price DECIMAL(12,2) NOT NULL,
+  qty INT NOT NULL,
+  image_url VARCHAR(500) DEFAULT NULL,
+  FOREIGN KEY (receive_order_id) REFERENCES receive_orders(id) ON DELETE CASCADE,
+  FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE SET NULL
+) ENGINE=InnoDB;

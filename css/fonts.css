@@ -1,0 +1,24 @@
+/* Phetsarath OT — Lao UI (CDN + local fallback) */
+@font-face {
+  font-family: "Phetsarath OT";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local("Phetsarath OT"),
+    local("PhetsarathOT"),
+    url("https://db.onlinewebfonts.com/t/c65fa576b2623696666079e09359e327.woff2") format("woff2"),
+    url("https://db.onlinewebfonts.com/t/c65fa576b2623696666079e09359e327.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Phetsarath OT";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src:
+    local("Phetsarath OT Bold"),
+    local("PhetsarathOT-Bold"),
+    url("https://db.onlinewebfonts.com/t/c65fa576b2623696666079e09359e327.woff2") format("woff2"),
+    url("https://db.onlinewebfonts.com/t/c65fa576b2623696666079e09359e327.woff") format("woff");
+}

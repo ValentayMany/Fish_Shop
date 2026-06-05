@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WillowShop — ຈັດການຜູ້ໃຊ້</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages/users.css">
+</head>
+<body class="users-page">
+
+<div class="sidebar">
+  <div class="logo">
+    <div class="logo-mark">W</div>
+    <div class="logo-name">WillowShop</div>
+    <div class="logo-sub">ລະບົບຈັດການຮ້ານຂາຍປາສວຍງາມ</div>
+  </div>
+  <div class="nav">
+    <div class="nav-label">ເມນູຫຼັກ</div>
+    <a class="nav-item" href="dashboard.html">ໜ້າຫຼັກ</a>
+    <a class="nav-item" href="stock.html">ສະຕອັກປາ</a>
+    <a class="nav-item" href="pos.html">ຂາຍສິນຄ້າ</a>
+    <a class="nav-item" href="supplier.html">ຮັບປາເຂົ້າ</a>
+    <a class="nav-item" href="report.html">ລາຍງານ</a>
+    <div class="nav-label">ລະບົບ</div>
+    <a class="nav-item active" href="users.html">ຈັດການຜູ້ໃຊ້</a>
+  </div>
+  <div class="sidebar-footer">
+    <div class="user-pill">
+      <div class="avatar">A</div>
+      <div><div class="user-name">Admin</div><div class="user-role">ເຈົ້າຂອງຮ້ານ</div></div>
+    </div>
+    <button class="logout-btn" onclick="handleLogout()">ອອກຈາກລະບົບ</button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div>
+      <div class="page-title"><b>ຈັດການຜູ້ໃຊ້</b></div>
+      <div class="page-sub"><b>ເພີ່ມ / ແກ້ໄຂ / ລຶບບັນຊີ ແລະ ປ່ຽນລະຫັດຜ່ານ</b></div>
+    </div>
+    <div class="topbar-right">
+      <button class="btn btn-primary" onclick="openCreateModal()"><b>+ ເພີ່ມຜູ້ໃຊ້ໃໝ່</b></button>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="grid2 users-grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><b>ລາຍຊື່ຜູ້ໃຊ້ທັງໝົດ</b></div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>ຊື່ຜູ້ໃຊ້</th>
+              <th>ຊື່ສະແດງ</th>
+              <th>ສິດ</th>
+              <th>ສ້າງເມື່ອ</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="users-table-body">
+            <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px;">ກຳລັງໂຫຼດ...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card password-card">
+        <div class="card-header">
+          <div class="card-title"><b>🔑 ປ່ຽນລະຫັດຜ່ານຂອງຂ້ອຍ</b></div>
+        </div>
+        <div class="password-form">
+          <div class="form-group">
+            <label class="form-label"><b>ບັນຊີປັດຈຸບັນ</b></label>
+            <input class="form-input" type="text" id="pwd-username" readonly>
+          </div>
+          <div class="form-group">
+            <label class="form-label"><b>ລະຫັດຜ່ານປັດຈຸບັນ</b></label>
+            <input class="form-input" type="password" id="pwd-current" placeholder="••••••••">
+          </div>
+          <div class="form-group">
+            <label class="form-label"><b>ລະຫັດຜ່ານໃໝ່</b></label>
+            <input class="form-input" type="password" id="pwd-new" placeholder="ຢ່າງໜ້ອຍ 4 ຕົວ">
+          </div>
+          <div class="form-group">
+            <label class="form-label"><b>ຢືນຢັນລະຫັດຜ່ານໃໝ່</b></label>
+            <input class="form-input" type="password" id="pwd-confirm" placeholder="••••••••">
+          </div>
+          <div id="pwd-msg" class="form-msg hidden"></div>
+          <button class="btn btn-primary" style="width:100%" onclick="changeMyPassword()"><b>ບັນທຶກລະຫັດຜ່ານໃໝ່</b></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="user-modal" style="display:none" onclick="if(event.target===this)closeUserModal()">
+  <div class="modal">
+    <div class="modal-title" id="user-modal-title"><b>+ ເພີ່ມຜູ້ໃຊ້ໃໝ່</b></div>
+    <input type="hidden" id="user-edit-id">
+
+    <div class="form-group" id="username-group">
+      <label class="form-label"><b>ຊື່ຜູ້ໃຊ້ (login)</b></label>
+      <input class="form-input" type="text" id="user-username" placeholder="admin2">
+      <small class="form-hint">a-z, 0-9, _ (3-50 ຕົວ)</small>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label"><b>ຊື່ສະແດງ</b></label>
+      <input class="form-input" type="text" id="user-display-name" placeholder="ຊື່ທີ່ສະແດງໃນລະບົບ">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label"><b>ສິດການເຂົ້າເຖິງ</b></label>
+      <select class="form-select" id="user-role">
+        <option value="staff">ພະນັກງານຂາຍ (POS ເທົ່ານັ້ນ)</option>
+        <option value="admin">ເຈົ້າຂອງຮ້ານ (ເຂົ້າໄດ້ທຸກຫນ້າ)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" id="user-password-label"><b>ລະຫັດຜ່ານ</b></label>
+      <input class="form-input" type="password" id="user-password" placeholder="••••••••">
+      <small class="form-hint" id="user-password-hint">ຢ່າງໜ້ອຍ 4 ຕົວອັກສອນ</small>
+    </div>
+
+    <div id="user-modal-msg" class="form-msg hidden"></div>
+
+    <div class="modal-actions" style="margin-top:20px;">
+      <button type="button" class="btn btn-ghost" onclick="closeUserModal()"><b>ຍົກເລີກ</b></button>
+      <button class="btn btn-primary" onclick="saveUser()"><b>ບັນທຶກ</b></button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/utils.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/pages/users.js"></script>
+</body>
+</html>
